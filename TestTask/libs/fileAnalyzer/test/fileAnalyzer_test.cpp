@@ -3,5 +3,6 @@
 
 TEST(fileAnalyzer_Test, Creating) {
 
+    std::cout << "Hello test creating!" << std::endl;
 
 }
