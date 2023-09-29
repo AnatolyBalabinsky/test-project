@@ -10,6 +10,7 @@ class fileAnalyzer{
 public:
 
     fileAnalyzer(std::string path);
+    std::string getPath() const;
 
     int32_t getLettersAmount() const;
     int32_t getWordsAmount() const;
