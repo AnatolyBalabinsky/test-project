@@ -32,3 +32,10 @@ TEST(fileAnalyzer_Test, SentencesAmount) {
     ASSERT_EQ(testedObject.getSentenceAmount(), 4);
 
 }
+
+TEST(fileAnalyzer_Test, dataTest) {
+
+    std::string filePath = "data/probeTexts/probeSentencesAmount_4.txt";
+    fileAnalyzer testedObject(filePath);
+    testedObject.printData();
+}

@@ -15,6 +15,7 @@ public:
     int32_t getLettersAmount() const;
     int32_t getWordsAmount() const;
     int32_t getSentenceAmount() const;
+    void printData() const;
 
 private:
 

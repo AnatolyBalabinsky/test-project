@@ -119,3 +119,13 @@ int32_t fileAnalyzer::getSentenceAmount() const{
     myFile.close();
     return totalAmountS;
 }
+
+void fileAnalyzer::printData() const{
+
+    char nextData = ';';
+
+    std::cout << "Number of letters: " << this->getLettersAmount() << nextData << std::endl;
+    std::cout << "Number of words: " << this->getWordsAmount() << nextData << std::endl;
+    std::cout << "Number of sentences: " << this->getSentenceAmount() << nextData << std::endl;
+
+}
