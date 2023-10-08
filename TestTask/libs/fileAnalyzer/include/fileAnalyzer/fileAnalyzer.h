@@ -9,18 +9,36 @@
 class fileAnalyzer{
 public:
 
-    fileAnalyzer(std::string path);
-    std::string getPath() const;
+    struct FileData{
 
-    int32_t getLettersAmount() const;
-    int32_t getWordsAmount() const;
-    int32_t getSentenceAmount() const;
-    void printData() const;
+        uint32_t totalLettersAmount = 0;
+        uint32_t totalWordsAmount = 0;
+        uint32_t totalSentencesAmount = 0;
+
+        /*
+        friend void operator<<(std::ofstream& os, const FileData& fd){
+            os <<  "Number of letters: " << fd.totalLettersAmount << ";" << std::endl;
+            os <<  "Number of words: " << fd.totalWordsAmount << ";" << std::endl;
+            os <<  "Number of sentences: " << fd.totalSentencesAmount << ";" << std::endl;
+        }*/
+    };
+
+    fileAnalyzer(std::string path);
+
+    FileData getFileInfo();
 
 private:
+    uint32_t getLettersAmount();
+    uint32_t getWordsAmount();
+    uint32_t getSentenceAmount();
+    void openFile ();
+    void closeFile ();
 
     std::string path;
+    std::ifstream myFile;
+
 
 };
+
 
 #endif

@@ -1,27 +1,40 @@
 #include "fileAnalyzer/fileAnalyzer.h"
 
 
-fileAnalyzer::fileAnalyzer(std::string path)
+fileAnalyzer::fileAnalyzer(std::string path) : path(path)
 {
-        this->path = path;
+    //this->path = path;
 }
 
-std::string fileAnalyzer::getPath() const{
 
-    return this->path;
-}
+void fileAnalyzer::openFile (){
 
-int32_t fileAnalyzer::getLettersAmount() const{
-
-    std::ifstream myFile;
     myFile.open(path);
 
     if(!myFile.is_open()){
-
-        std::cout << "Reading error!" << std::endl;
-        return 0;
+        throw std::runtime_error("Can't open " + path);
 
     }
+
+}
+
+/*
+
+friend void fileAnalyzer::FileData::operator<<(std::ofstream& os, const FileData& fd)
+{
+    os <<  "Number of letters: " << fd.totalLettersAmount << ";" << std::endl;
+    os <<  "Number of words: " << fd.totalWordsAmount << ";" << std::endl;
+    os <<  "Number of sentences: " << fd.totalSentencesAmount << ";" << std::endl;
+}
+*/
+
+void fileAnalyzer::closeFile (){
+
+    myFile.close();
+
+}
+
+uint32_t fileAnalyzer::getLettersAmount() {
 
     char ch;
     int32_t totalAmountL = 0;
@@ -33,23 +46,13 @@ int32_t fileAnalyzer::getLettersAmount() const{
 
        }
 
-    myFile.close();
-    return totalAmountL;
+    closeFile();
 
+    return totalAmountL;
 
 }
 
-int32_t fileAnalyzer::getWordsAmount() const{
-
-    std::ifstream myFile;
-    myFile.open(path);
-
-    if(!myFile.is_open()){
-
-        std::cout << "Reading error!" << std::endl;
-        return 0;
-
-    }
+uint32_t fileAnalyzer::getWordsAmount(){
 
     char ch;
     int32_t totalAmountW = 0;
@@ -71,22 +74,11 @@ int32_t fileAnalyzer::getWordsAmount() const{
         }
     }
 
-    myFile.close();
     return totalAmountW;
 
 }
 
-int32_t fileAnalyzer::getSentenceAmount() const{
-
-    std::ifstream myFile;
-    myFile.open(path);
-
-    if(!myFile.is_open()){
-
-        std::cout << "Reading error!" << std::endl;
-        return 0;
-
-    }
+uint32_t fileAnalyzer::getSentenceAmount() {
 
     char ch;
     int32_t totalAmountS = 0;
@@ -107,7 +99,6 @@ int32_t fileAnalyzer::getSentenceAmount() const{
             }
         }
 
-
         else{
 
             isSentence = false;
@@ -116,16 +107,32 @@ int32_t fileAnalyzer::getSentenceAmount() const{
 
     }
 
-    myFile.close();
     return totalAmountS;
 }
 
-void fileAnalyzer::printData() const{
+fileAnalyzer::FileData fileAnalyzer::getFileInfo() {
 
-    char nextData = ';';
+    FileData fileData;
 
-    std::cout << "Number of letters: " << this->getLettersAmount() << nextData << std::endl;
-    std::cout << "Number of words: " << this->getWordsAmount() << nextData << std::endl;
-    std::cout << "Number of sentences: " << this->getSentenceAmount() << nextData << std::endl;
+    openFile();
+    fileData.totalLettersAmount = getLettersAmount();
+    closeFile();
+
+    openFile();
+    fileData.totalWordsAmount = getWordsAmount();
+    closeFile();
+
+    openFile();
+    fileData.totalSentencesAmount = getSentenceAmount();
+    closeFile();
+
+    std::cout << "Number of letters: " << fileData.totalLettersAmount << std::endl;
+    std::cout << "Number of words: " << fileData.totalWordsAmount << std::endl;
+    std::cout << "Number of sentences: " << fileData.totalSentencesAmount << std::endl;
+
+    closeFile();
+    //std::cout << fileData << std::endl;
+
+    return fileData;
 
 }

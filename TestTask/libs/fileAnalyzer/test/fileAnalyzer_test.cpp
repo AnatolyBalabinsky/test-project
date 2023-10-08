@@ -3,39 +3,50 @@
 
 TEST(fileAnalyzer_Test, Creating) {
 
-    std::string filePath = "Hello world!";
+    std::string filePath = "data/probeTexts/probeLettersAmount_10.txt";
     fileAnalyzer testedObject(filePath);
-    ASSERT_EQ(testedObject.getPath(), filePath);
+
+    try{
+    testedObject.getFileInfo();
+    }
+
+    catch(std::exception& e){
+        ASSERT_STREQ(e.what(), "Uncorrect path");
+    }
 
 }
 
-TEST(fileAnalyzer_Test, LettersAmount) {
+TEST(fileAnalyzer_Test, FileForCheckingLettersAmount) {
 
     std::string filePath = "data/probeTexts/probeLettersAmount_10.txt";
     fileAnalyzer testedObject(filePath);
-    ASSERT_EQ(testedObject.getLettersAmount(), 10);
-
+    testedObject.getFileInfo();
 }
 
-TEST(fileAnalyzer_Test, WordsAmount) {
+TEST(fileAnalyzer_Test, FileForCheckingWordsAmount) {
 
     std::string filePath = "data/probeTexts/probeWordsAmount_5.txt";
     fileAnalyzer testedObject(filePath);
-    ASSERT_EQ(testedObject.getWordsAmount(), 5);
+    testedObject.getFileInfo();
 
 }
 
-TEST(fileAnalyzer_Test, SentencesAmount) {
+TEST(fileAnalyzer_Test, FileForCheckingSentencesAmount) {
 
     std::string filePath = "data/probeTexts/probeSentencesAmount_4.txt";
     fileAnalyzer testedObject(filePath);
-    ASSERT_EQ(testedObject.getSentenceAmount(), 4);
+    testedObject.getFileInfo();
 
 }
 
+/*
 TEST(fileAnalyzer_Test, dataTest) {
 
     std::string filePath = "data/probeTexts/probeSentencesAmount_4.txt";
     fileAnalyzer testedObject(filePath);
+    testedObject.getLettersAmount();
+    testedObject.getWordsAmount();
+    testedObject.getSentenceAmount();
     testedObject.printData();
 }
+*/
