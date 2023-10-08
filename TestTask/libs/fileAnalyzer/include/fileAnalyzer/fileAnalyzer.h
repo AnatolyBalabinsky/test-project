@@ -38,6 +38,9 @@ private:
     std::string path;
     std::ifstream myFile;
 
+    LetterChecker CheckLetter;
+    WordChecker CheckWord;
+    SentenceChecker CheckSentence;
 
 };
 

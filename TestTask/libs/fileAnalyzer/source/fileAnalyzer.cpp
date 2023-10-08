@@ -37,7 +37,6 @@ uint32_t fileAnalyzer::getLettersAmount() {
 
     char symbol;
     uint32_t totalAmountL = 0;
-    LetterChecker CheckLetter;
 
     while (myFile.get(symbol)) {
 
@@ -57,8 +56,6 @@ uint32_t fileAnalyzer::getWordsAmount(){
     char symbol;
     uint32_t totalAmountW = 0;
 
-    WordChecker CheckWord;
-
     while (myFile.get(symbol)) {
 
         if(CheckWord.check(symbol) == true){
@@ -76,8 +73,6 @@ uint32_t fileAnalyzer::getSentenceAmount() {
 
     char symbol;
     uint32_t totalAmountS = 0;
-
-    SentenceChecker CheckSentence;
 
     while (myFile.get(symbol)) {
 
