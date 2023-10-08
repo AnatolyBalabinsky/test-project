@@ -3,7 +3,6 @@
 
 fileAnalyzer::fileAnalyzer(std::string path) : path(path)
 {
-    //this->path = path;
 }
 
 
@@ -36,12 +35,13 @@ void fileAnalyzer::closeFile (){
 
 uint32_t fileAnalyzer::getLettersAmount() {
 
-    char ch;
-    int32_t totalAmountL = 0;
+    char symbol;
+    uint32_t totalAmountL = 0;
+    LetterChecker CheckLetter;
 
-    while (myFile.get(ch)) {
+    while (myFile.get(symbol)) {
 
-        if(ch >= 65 && ch <= 90 || ch >= 97 && ch <= 122)
+        if(CheckLetter.check(symbol) == true)
             ++totalAmountL;
 
        }
@@ -54,22 +54,16 @@ uint32_t fileAnalyzer::getLettersAmount() {
 
 uint32_t fileAnalyzer::getWordsAmount(){
 
-    char ch;
-    int32_t totalAmountW = 0;
-    bool isWord = false;
+    char symbol;
+    uint32_t totalAmountW = 0;
 
-    while (myFile.get(ch)) {
+    WordChecker CheckWord;
 
-        if(ch >= 65 && ch <= 90 || ch >= 97 && ch <= 122){
-            if(!isWord){
-                isWord = true;
-                ++totalAmountW;
-            }
-        }
+    while (myFile.get(symbol)) {
 
-        else{
+        if(CheckWord.check(symbol) == true){
 
-            isWord = false;
+            ++totalAmountW;
 
         }
     }
@@ -80,29 +74,15 @@ uint32_t fileAnalyzer::getWordsAmount(){
 
 uint32_t fileAnalyzer::getSentenceAmount() {
 
-    char ch;
-    int32_t totalAmountS = 0;
-    bool isSentence = false;
+    char symbol;
+    uint32_t totalAmountS = 0;
 
-    while (myFile.get(ch)) {
+    SentenceChecker CheckSentence;
 
-        if (ch != '!' && ch != '?' && ch != '.'){
+    while (myFile.get(symbol)) {
 
-            if(ch >= 65 && ch <= 90 || ch >= 97 && ch <= 122){
-
-                if(!isSentence){
-
-                    isSentence = true;
-                    ++totalAmountS;
-
-                }
-            }
-        }
-
-        else{
-
-            isSentence = false;
-
+        if (CheckSentence.check(symbol) == true){
+            ++totalAmountS;
         }
 
     }

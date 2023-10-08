@@ -16,37 +16,29 @@ TEST(fileAnalyzer_Test, Creating) {
 
 }
 
-TEST(fileAnalyzer_Test, FileForCheckingLettersAmount) {
-
+TEST(fileAnalyzer_Test, LettersAmount)
+{
     std::string filePath = "data/probeTexts/probeLettersAmount_10.txt";
     fileAnalyzer testedObject(filePath);
-    testedObject.getFileInfo();
+
+    ASSERT_EQ(testedObject.getFileInfo().totalLettersAmount, 10);
+
 }
 
-TEST(fileAnalyzer_Test, FileForCheckingWordsAmount) {
-
+TEST(fileAnalyzer_Test, WordsAmount)
+{
     std::string filePath = "data/probeTexts/probeWordsAmount_5.txt";
     fileAnalyzer testedObject(filePath);
-    testedObject.getFileInfo();
+
+    ASSERT_EQ(testedObject.getFileInfo().totalWordsAmount, 5);
 
 }
 
-TEST(fileAnalyzer_Test, FileForCheckingSentencesAmount) {
-
+TEST(fileAnalyzer_Test, SentencesAmount)
+{
     std::string filePath = "data/probeTexts/probeSentencesAmount_4.txt";
     fileAnalyzer testedObject(filePath);
-    testedObject.getFileInfo();
+
+    ASSERT_EQ(testedObject.getFileInfo().totalSentencesAmount, 4);
 
 }
-
-/*
-TEST(fileAnalyzer_Test, dataTest) {
-
-    std::string filePath = "data/probeTexts/probeSentencesAmount_4.txt";
-    fileAnalyzer testedObject(filePath);
-    testedObject.getLettersAmount();
-    testedObject.getWordsAmount();
-    testedObject.getSentenceAmount();
-    testedObject.printData();
-}
-*/

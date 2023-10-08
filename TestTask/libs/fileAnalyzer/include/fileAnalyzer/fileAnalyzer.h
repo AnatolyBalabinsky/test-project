@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdint>
+#include "checker/checker.h"
 
 class fileAnalyzer{
 public:

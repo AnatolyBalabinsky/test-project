@@ -13,6 +13,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/in
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME})
 
-#target_link_libraries(${PROJECT_NAME} Checker)
+add_subdirectory(checker)
+target_link_libraries(${PROJECT_NAME} PUBLIC Checker)
 
 include("unittest.cmake")
