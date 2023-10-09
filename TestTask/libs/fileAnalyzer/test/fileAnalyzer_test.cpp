@@ -42,3 +42,36 @@ TEST(fileAnalyzer_Test, SentencesAmount)
     ASSERT_EQ(testedObject.getFileInfo().totalSentencesAmount, 4);
 
 }
+
+TEST(fileAnalyzer_Test, SymbolsAmount)
+{
+    std::string filePath = "data/probeTexts/probeSymbols_8.txt";
+    FileAnalyzer testedObject(filePath);
+
+    ASSERT_EQ(testedObject.getFileInfo().totalSymbolsAmount, 8);
+
+}
+
+TEST(fileAnalyzer_Test, EmptyFile)
+{
+    std::string filePath = "data/probeTexts/emptyFile.txt";
+    FileAnalyzer testedObject(filePath);
+
+    ASSERT_EQ(testedObject.getFileInfo().totalSymbolsAmount, 0);
+    ASSERT_EQ(testedObject.getFileInfo().totalLettersAmount, 0);
+    ASSERT_EQ(testedObject.getFileInfo().totalWordsAmount, 0);
+    ASSERT_EQ(testedObject.getFileInfo().totalSentencesAmount, 0);
+}
+
+TEST(fileAnalyzer_Test, FinalTestAndOperatorTest)
+{
+    std::string filePath = "data/probeTexts/FinalCheckFile_50_41_8_2.txt";
+    FileAnalyzer testedObject(filePath);
+
+    ASSERT_EQ(testedObject.getFileInfo().totalSymbolsAmount, 50);
+    ASSERT_EQ(testedObject.getFileInfo().totalLettersAmount, 41);
+    ASSERT_EQ(testedObject.getFileInfo().totalWordsAmount, 8);
+    ASSERT_EQ(testedObject.getFileInfo().totalSentencesAmount, 2);
+    std::cout << testedObject.getFileInfo();
+}
+

@@ -8,7 +8,9 @@ FileAnalyzer::FileAnalyzer(std::string path) : path(path)
 void FileAnalyzer::openFile (){
 
     myFile.open(path);
+
     if(!myFile.is_open()){
+
         throw std::runtime_error("Can't open " + path);
 
     }
@@ -21,56 +23,80 @@ void FileAnalyzer::closeFile (){
 
 }
 
-uint32_t FileAnalyzer::getLettersAmount() {
+uint32_t FileAnalyzer::getSymbolsAmount(){
 
-    checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::letter);
-    char symbol;
-    uint32_t totalAmountL = 0;
+    myFile.seekg(0, std::ios::end);
+    uint32_t fileSize = myFile.tellg();
+    myFile.seekg(0, std::ios::beg);
 
-    while (myFile.get(symbol)) {
-
-        if(checker->check(symbol) == true)
-            ++totalAmountL;
-
-       }
-
-    return totalAmountL;
-
+    return fileSize-1;
 }
 
-uint32_t FileAnalyzer::getWordsAmount(){
+uint32_t FileAnalyzer::getLettersAmount(uint32_t symbolsAmount) {
+
+    checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::letter);
+
+    char symbol;
+    uint32_t totalAmountL = 0;
+    uint32_t cursorPos = 0;
+
+    while (cursorPos <= symbolsAmount) {
+
+        myFile.get(symbol);
+
+        if(checker->check(symbol) == true){++totalAmountL;}
+
+        ++cursorPos;
+
+    }
+
+    myFile.seekg(0, std::ios::beg);
+    return totalAmountL;
+}
+
+uint32_t FileAnalyzer::getWordsAmount(uint32_t symbolsAmount){
 
     checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::word);
+
     char symbol;
     uint32_t totalAmountW = 0;
+    uint32_t cursorPos = 0;
 
-    while (myFile.get(symbol)) {
+    while (cursorPos <= symbolsAmount) {
 
+        myFile.get(symbol);
         if(checker->check(symbol) == true){
 
             ++totalAmountW;
 
         }
+        ++cursorPos;
     }
 
+    myFile.seekg(0, std::ios::beg);
     return totalAmountW;
-
 }
 
-uint32_t FileAnalyzer::getSentenceAmount() {
+uint32_t FileAnalyzer::getSentenceAmount(uint32_t symbolsAmount) {
 
     checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::sentence);
+
     char symbol;
     uint32_t totalAmountS = 0;
+    uint32_t cursorPos = 0;
 
-    while (myFile.get(symbol)) {
+    while (cursorPos <= symbolsAmount) {
+
+        myFile.get(symbol);
 
         if (checker->check(symbol) == true){
             ++totalAmountS;
         }
 
+        ++cursorPos;
     }
 
+    myFile.seekg(0, std::ios::beg);
     return totalAmountS;
 }
 
@@ -79,18 +105,12 @@ FileAnalyzer::FileData FileAnalyzer::getFileInfo() {
     FileData fileData;
 
     openFile();
-    fileData.totalLettersAmount = getLettersAmount();
-    //myFile.seekg(0, std::ios::beg);
-    closeFile();
 
-    openFile();
-    fileData.totalWordsAmount = getWordsAmount();
-    //myFile.seekg(0, std::ios::beg);
-    closeFile();
+    fileData.totalSymbolsAmount = getSymbolsAmount();
+    fileData.totalLettersAmount = getLettersAmount(fileData.totalSymbolsAmount);
+    fileData.totalWordsAmount = getWordsAmount(fileData.totalSymbolsAmount);
+    fileData.totalSentencesAmount = getSentenceAmount(fileData.totalSymbolsAmount);
 
-    openFile();
-    fileData.totalSentencesAmount = getSentenceAmount();
-    //myFile.seekg(0, std::ios::beg);
     closeFile();
 
     return fileData;
