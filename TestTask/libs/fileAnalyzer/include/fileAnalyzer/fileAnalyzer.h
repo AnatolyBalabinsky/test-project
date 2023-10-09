@@ -7,7 +7,7 @@
 #include <cstdint>
 #include "checker/checker.h"
 
-class fileAnalyzer{
+class FileAnalyzer{
 public:
 
     struct FileData{
@@ -23,7 +23,7 @@ public:
         }
     };
 
-    fileAnalyzer(std::string path);
+    FileAnalyzer(std::string path);
 
     FileData getFileInfo();
 

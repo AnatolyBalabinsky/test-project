@@ -1,12 +1,11 @@
 #include "fileAnalyzer/fileAnalyzer.h"
 
-
-fileAnalyzer::fileAnalyzer(std::string path) : path(path)
+FileAnalyzer::FileAnalyzer(std::string path) : path(path)
 {
 }
 
 
-void fileAnalyzer::openFile (){
+void FileAnalyzer::openFile (){
 
     myFile.open(path);
     if(!myFile.is_open()){
@@ -16,13 +15,13 @@ void fileAnalyzer::openFile (){
 
 }
 
-void fileAnalyzer::closeFile (){
+void FileAnalyzer::closeFile (){
 
     myFile.close();
 
 }
 
-uint32_t fileAnalyzer::getLettersAmount() {
+uint32_t FileAnalyzer::getLettersAmount() {
 
     checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::letter);
     char symbol;
@@ -39,7 +38,7 @@ uint32_t fileAnalyzer::getLettersAmount() {
 
 }
 
-uint32_t fileAnalyzer::getWordsAmount(){
+uint32_t FileAnalyzer::getWordsAmount(){
 
     checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::word);
     char symbol;
@@ -58,7 +57,7 @@ uint32_t fileAnalyzer::getWordsAmount(){
 
 }
 
-uint32_t fileAnalyzer::getSentenceAmount() {
+uint32_t FileAnalyzer::getSentenceAmount() {
 
     checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::sentence);
     char symbol;
@@ -75,7 +74,7 @@ uint32_t fileAnalyzer::getSentenceAmount() {
     return totalAmountS;
 }
 
-fileAnalyzer::FileData fileAnalyzer::getFileInfo() {
+FileAnalyzer::FileData FileAnalyzer::getFileInfo() {
 
     FileData fileData;
 
