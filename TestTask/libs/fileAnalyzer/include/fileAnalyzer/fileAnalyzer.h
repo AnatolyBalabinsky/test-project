@@ -16,12 +16,11 @@ public:
         uint32_t totalWordsAmount = 0;
         uint32_t totalSentencesAmount = 0;
 
-        /*
-        friend void operator<<(std::ofstream& os, const FileData& fd){
+        friend void operator<<(std::ostream& os, const FileData& fd){
             os <<  "Number of letters: " << fd.totalLettersAmount << ";" << std::endl;
             os <<  "Number of words: " << fd.totalWordsAmount << ";" << std::endl;
             os <<  "Number of sentences: " << fd.totalSentencesAmount << ";" << std::endl;
-        }*/
+        }
     };
 
     fileAnalyzer(std::string path);
@@ -32,15 +31,14 @@ private:
     uint32_t getLettersAmount();
     uint32_t getWordsAmount();
     uint32_t getSentenceAmount();
+
     void openFile ();
     void closeFile ();
 
     std::string path;
     std::ifstream myFile;
 
-    LetterChecker CheckLetter;
-    WordChecker CheckWord;
-    SentenceChecker CheckSentence;
+    std::unique_ptr<IChecker> checker;
 
 };
 

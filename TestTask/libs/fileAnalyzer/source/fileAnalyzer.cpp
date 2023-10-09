@@ -9,23 +9,12 @@ fileAnalyzer::fileAnalyzer(std::string path) : path(path)
 void fileAnalyzer::openFile (){
 
     myFile.open(path);
-
     if(!myFile.is_open()){
         throw std::runtime_error("Can't open " + path);
 
     }
 
 }
-
-/*
-
-friend void fileAnalyzer::FileData::operator<<(std::ofstream& os, const FileData& fd)
-{
-    os <<  "Number of letters: " << fd.totalLettersAmount << ";" << std::endl;
-    os <<  "Number of words: " << fd.totalWordsAmount << ";" << std::endl;
-    os <<  "Number of sentences: " << fd.totalSentencesAmount << ";" << std::endl;
-}
-*/
 
 void fileAnalyzer::closeFile (){
 
@@ -35,17 +24,16 @@ void fileAnalyzer::closeFile (){
 
 uint32_t fileAnalyzer::getLettersAmount() {
 
+    checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::letter);
     char symbol;
     uint32_t totalAmountL = 0;
 
     while (myFile.get(symbol)) {
 
-        if(CheckLetter.check(symbol) == true)
+        if(checker->check(symbol) == true)
             ++totalAmountL;
 
        }
-
-    closeFile();
 
     return totalAmountL;
 
@@ -53,12 +41,13 @@ uint32_t fileAnalyzer::getLettersAmount() {
 
 uint32_t fileAnalyzer::getWordsAmount(){
 
+    checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::word);
     char symbol;
     uint32_t totalAmountW = 0;
 
     while (myFile.get(symbol)) {
 
-        if(CheckWord.check(symbol) == true){
+        if(checker->check(symbol) == true){
 
             ++totalAmountW;
 
@@ -71,12 +60,13 @@ uint32_t fileAnalyzer::getWordsAmount(){
 
 uint32_t fileAnalyzer::getSentenceAmount() {
 
+    checker = CheckerFactory::createChecker(CheckerFactory::CheckerParam::sentence);
     char symbol;
     uint32_t totalAmountS = 0;
 
     while (myFile.get(symbol)) {
 
-        if (CheckSentence.check(symbol) == true){
+        if (checker->check(symbol) == true){
             ++totalAmountS;
         }
 
@@ -91,22 +81,18 @@ fileAnalyzer::FileData fileAnalyzer::getFileInfo() {
 
     openFile();
     fileData.totalLettersAmount = getLettersAmount();
+    //myFile.seekg(0, std::ios::beg);
     closeFile();
 
     openFile();
     fileData.totalWordsAmount = getWordsAmount();
+    //myFile.seekg(0, std::ios::beg);
     closeFile();
 
     openFile();
     fileData.totalSentencesAmount = getSentenceAmount();
+    //myFile.seekg(0, std::ios::beg);
     closeFile();
-
-    std::cout << "Number of letters: " << fileData.totalLettersAmount << std::endl;
-    std::cout << "Number of words: " << fileData.totalWordsAmount << std::endl;
-    std::cout << "Number of sentences: " << fileData.totalSentencesAmount << std::endl;
-
-    closeFile();
-    //std::cout << fileData << std::endl;
 
     return fileData;
 

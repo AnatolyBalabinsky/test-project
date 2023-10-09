@@ -58,3 +58,29 @@ bool SentenceChecker::check(char symbol)
 
     return false;
 }
+
+std::unique_ptr<IChecker> CheckerFactory::createChecker (CheckerParam param) {
+
+    if(param == CheckerParam::letter) {
+
+        //std::unique_ptr<IChecker> checkLetter(new LetterChecker());
+        return std::make_unique<LetterChecker>();
+
+    }
+    else if(param == CheckerParam::word){
+
+        //std::unique_ptr<IChecker> checkWord(new WordChecker());
+        return std::make_unique<WordChecker>();
+    }
+
+    else if(param == CheckerParam::sentence){
+
+        //std::unique_ptr<IChecker> checkSentence(new SentenceChecker());
+        return std::make_unique<SentenceChecker>();
+    }
+
+    else{
+        return nullptr;
+    }
+
+}
