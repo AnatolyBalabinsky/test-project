@@ -38,15 +38,11 @@ uint32_t FileAnalyzer::getLettersAmount(uint32_t symbolsAmount) {
 
     char symbol;
     uint32_t totalAmountL = 0;
-    uint32_t cursorPos = 0;
 
-    while (cursorPos <= symbolsAmount) {
+    for (uint32_t cursorPos = 0; cursorPos <= symbolsAmount; ++cursorPos) {
 
         myFile.get(symbol);
-
         if(checker->check(symbol) == true){++totalAmountL;}
-
-        ++cursorPos;
 
     }
 
@@ -60,17 +56,12 @@ uint32_t FileAnalyzer::getWordsAmount(uint32_t symbolsAmount){
 
     char symbol;
     uint32_t totalAmountW = 0;
-    uint32_t cursorPos = 0;
 
-    while (cursorPos <= symbolsAmount) {
+    for (uint32_t cursorPos = 0; cursorPos <= symbolsAmount; ++cursorPos) {
 
         myFile.get(symbol);
-        if(checker->check(symbol) == true){
+        if(checker->check(symbol) == true){++totalAmountW;}
 
-            ++totalAmountW;
-
-        }
-        ++cursorPos;
     }
 
     myFile.seekg(0, std::ios::beg);
@@ -83,17 +74,12 @@ uint32_t FileAnalyzer::getSentenceAmount(uint32_t symbolsAmount) {
 
     char symbol;
     uint32_t totalAmountS = 0;
-    uint32_t cursorPos = 0;
 
-    while (cursorPos <= symbolsAmount) {
+    for (uint32_t cursorPos = 0; cursorPos <= symbolsAmount; ++cursorPos) {
 
         myFile.get(symbol);
+        if (checker->check(symbol) == true){++totalAmountS;}
 
-        if (checker->check(symbol) == true){
-            ++totalAmountS;
-        }
-
-        ++cursorPos;
     }
 
     myFile.seekg(0, std::ios::beg);
