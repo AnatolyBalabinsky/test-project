@@ -1,4 +1,3 @@
-#include "checker/ichecker.h"
 #include "checker/LetterChecker.h"
 #include "checker/WordChecker.h"
 #include "checker/SentenceChecker.h"
